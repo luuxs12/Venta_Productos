@@ -55,7 +55,7 @@ public class ClienteDAO implements CRUD<TCliente> {
                 );
                 datos.add(c);
             }
-        } catch (SQLException e) {
+        } catch (Exception e) {
             System.out.println("Error al listar los clientes: " + e.getMessage());
         }
         return datos;
