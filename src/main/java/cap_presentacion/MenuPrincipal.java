@@ -198,6 +198,11 @@ public class MenuPrincipal extends javax.swing.JFrame {
         frmCliente.setVisible(false);
         frmProduct.setVisible(false);
         frmVentas.setVisible(true);
+        
+        if(frmVentas.isVisible()){
+            frmVentas.actulizarTabla();
+        }
+        
     }//GEN-LAST:event_jMenu1MousePressed
 
     /**

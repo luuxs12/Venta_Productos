@@ -9,13 +9,16 @@ package cap_logica;
  * @author Administrator
  */
 public class Producto {
+    
     public Producto(){}
-    public Producto(Integer idProducto, Double precioProducto, String nombre, Integer stock) {
+    
+    public Producto(Integer idProducto, String nombre, Double precioProducto, Integer stock) {
         this.idproducto = idProducto;
         this.precioProducto = precioProducto;
         this.nombre = nombre;
         this.stock = stock;
     }
+
 
     public Integer getIdProducto() {
         return idproducto;

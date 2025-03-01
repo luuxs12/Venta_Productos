@@ -5,7 +5,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public interface CRUD<O> {
-    public void registrar(O data);
+    public Integer registrar(O data);
     public List<O> listar();
     public void Eliminar();
     public O consultarPorId(int id);

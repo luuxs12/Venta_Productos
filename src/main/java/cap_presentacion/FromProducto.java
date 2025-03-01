@@ -4,17 +4,76 @@
  */
 package cap_presentacion;
 
+import cap_logica.ProductDAO;
+import cap_logica.Producto;
+import cap_logica.TCliente;
+import static cap_presentacion.FromCliente.mostrarConfirmacion;
+import javax.swing.JOptionPane;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Administrator
  */
 public class FromProducto extends javax.swing.JInternalFrame {
-
-    /**
-     * Creates new form FromProducto
-     */
+    
+    private int id;
+    Producto tproduct = new Producto();
+    private DefaultTableModel tableModel;
+    
+    ProductDAO productoDAO = new ProductDAO();
+    
     public FromProducto() {
         initComponents();
+        tableModel = new DefaultTableModel(new String[]{"id", "Nombre", "Precio", "Stock"}, 0);
+        
+        tbproductos.setModel(tableModel);
+        productoDAO.cargarDatosTabla(tableModel);
+    }
+    
+    void limpiarForm() {
+        txtidproducto.setText("");
+        txtnombreproducto.setText("");
+        txtprecioproducto.setText("");
+        txtstockproducto.setText("");
+    }
+    
+    private void llenarDatosProductos() {
+        int filaseleccionado = tbproductos.getSelectedRow();
+        if (filaseleccionado == -1) {
+            JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
+        } else {
+            
+            txtidproducto.setText(String.valueOf(tproduct.getIdProducto()));
+            txtnombreproducto.setText(tproduct.getNombre());
+            txtprecioproducto.setText(tproduct.getPrecioProducto().toString());
+            txtstockproducto.setText(String.valueOf(tproduct.getStock()));
+            
+        }
+        
+    }
+    
+    public static boolean mostrarConfirmacion(String mensaje, String titulo) {
+        int opcion = JOptionPane.showConfirmDialog(
+                null,
+                mensaje,
+                titulo,
+                JOptionPane.YES_NO_OPTION,
+                JOptionPane.WARNING_MESSAGE
+        );
+        return opcion == JOptionPane.YES_OPTION;
+    }
+    
+    private void eliminarProducto() {
+        int filaseleccionado = tbproductos.getSelectedRow();
+        if (filaseleccionado == -1 && filaseleccionado == 0) {
+            JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
+        } else {
+            if (mostrarConfirmacion("¿Estás seguro de eliminar cliente id : " + tproduct.getIdProducto() + "?", "Confirmar Eliminación")) {
+                productoDAO.Eliminar(id);
+            }
+            
+        }
     }
 
     /**
@@ -51,6 +110,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
 
         jLabel4.setText("Stock:");
 
+        txtidproducto.setEnabled(false);
         txtidproducto.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 txtidproductoActionPerformed(evt);
@@ -119,6 +179,11 @@ public class FromProducto extends javax.swing.JInternalFrame {
 
             }
         ));
+        tbproductos.addMouseListener(new java.awt.event.MouseAdapter() {
+            public void mousePressed(java.awt.event.MouseEvent evt) {
+                tbproductosMousePressed(evt);
+            }
+        });
         jScrollPane1.setViewportView(tbproductos);
 
         jLabel5.setText("Click para Seleccionar");
@@ -195,16 +260,59 @@ public class FromProducto extends javax.swing.JInternalFrame {
     }//GEN-LAST:event_txtnombreproductoActionPerformed
 
     private void btnguardarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnguardarActionPerformed
-        // TODO add your handling code here:
+        String nombre = txtnombreproducto.getText();
+        double precioProducto = Double.parseDouble(txtprecioproducto.getText());
+        int stock = Integer.parseInt(txtstockproducto.getText());
+        
+        Producto product = new Producto();
+        product.setNombre(nombre);
+        product.setPrecioProducto(precioProducto);
+        product.setStock(stock);
+        
+        productoDAO.registrar(product);
+        productoDAO.cargarDatosTabla(tableModel);
+        limpiarForm();
+        
+
     }//GEN-LAST:event_btnguardarActionPerformed
 
     private void btnmodificarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnmodificarActionPerformed
-        // TODO add your handling code here:
+        int id = Integer.parseInt(txtidproducto.getText());
+        String nombre = txtnombreproducto.getText();
+        double precioProducto = Double.parseDouble(txtprecioproducto.getText());
+        int stock = Integer.parseInt(txtstockproducto.getText());
+        
+        Producto product = new Producto();
+        product.setIdProducto(id);
+        product.setNombre(nombre);
+        product.setPrecioProducto(precioProducto);
+        product.setStock(stock);
+        
+        productoDAO.Actualizar(product);
+        productoDAO.cargarDatosTabla(tableModel);
+         limpiarForm();
+        
+        
+
     }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-        // TODO add your handling code here:
+        
+        eliminarProducto();
+        productoDAO.cargarDatosTabla(tableModel);
+        limpiarForm();
     }//GEN-LAST:event_btneliminarActionPerformed
+
+    private void tbproductosMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbproductosMousePressed
+        int fila = tbproductos.getSelectedRow();
+        if (fila == -1) {
+            JOptionPane.showMessageDialog(null, "cliente no seleccionado");
+        } else {
+            id = (Integer) tbproductos.getValueAt(fila, 0);
+            tproduct = productoDAO.consultarPorId(id);
+            llenarDatosProductos();
+        }
+    }//GEN-LAST:event_tbproductosMousePressed
 
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -225,4 +333,5 @@ public class FromProducto extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtprecioproducto;
     private javax.swing.JTextField txtstockproducto;
     // End of variables declaration//GEN-END:variables
+
 }

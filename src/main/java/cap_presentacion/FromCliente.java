@@ -287,7 +287,6 @@ public class FromCliente extends javax.swing.JInternalFrame {
         TCliente cliente = new TCliente(id, nombre, apellido, dni);
 
         cltVM.Actualizar(cliente);
-        limpiarform();
         cltVM.cargarDatosTabla(tableModel);
         limpiarform();
     }//GEN-LAST:event_btnmodificarActionPerformed

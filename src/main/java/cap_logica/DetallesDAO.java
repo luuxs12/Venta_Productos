@@ -11,7 +11,7 @@ public class DetallesDAO implements CRUD<TDetalle> {
     private VentasDAO ventaDAO= new VentasDAO();
     
     @Override
-    public void registrar(TDetalle data) {
+    public Integer registrar(TDetalle data) {
         PreparedStatement ps = null;
 
         String sql = "INSERT INTO detalle (fkboleta, fkproducto,cantidad,precioVenta) VALUES (?, ?,?,?)";
@@ -26,13 +26,14 @@ public class DetallesDAO implements CRUD<TDetalle> {
             int rowsAffected = ps.executeUpdate();
 
             if (rowsAffected > 0) {
-                System.out.println("boleta registrado exitosamente: ");
+                System.out.println("detalle registrado exitosamente: ");
             } else {
-                System.out.println("Error al registrar boleta.");
+                System.out.println("Error al registrar detalle.");
             }
         } catch (SQLException e) {
-            System.out.println("Error al registrar el boleta: " + e.getMessage());
+            System.out.println("Error al registrar el detalle: " + e.getMessage());
         }
+        return null;
     }
 
     @Override
@@ -65,17 +66,15 @@ public class DetallesDAO implements CRUD<TDetalle> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-    public Integer generarIdVenta() {
-
-
+   /*public Integer generarIdVenta() {
         // Obtener la cantidad de órdenes ya registradas hoy
+       List<TVenta> ventas = ventaDAO.listar();
+        int contador =    ventas.get(ventas.size() - 1).getIdboleta() + 1 ; // Incrementar el número de orden
         
-        List<TVenta> ventas = ventaDAO.listar();
-        int contador = ventas.size() +1; // Incrementar el número de orden
-
+       
         // Formar el código de orden único
         return contador;
-    }
+    }*/
 
 
 }

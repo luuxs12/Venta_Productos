@@ -1,26 +1,27 @@
 package cap_logica;
 
 import cap_bd.CConexion;
+
 import java.sql.PreparedStatement;
-import java.sql.ResultSet;
+import java.sql.*;
 import java.sql.SQLException;
-import java.text.SimpleDateFormat;
+import java.sql.PreparedStatement;
 import java.util.ArrayList;
-import java.util.Date;
+
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class VentasDAO implements CRUD<TVenta> {
 
     @Override
-    public void registrar(TVenta data) {
-
+    public Integer registrar(TVenta data) {
+        Integer idboleta=null;
         PreparedStatement ps = null;
 
         String sql = "INSERT INTO boleta (fechaBoleta, fkcliente) VALUES (?, ?)";
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = CConexion.getInstancia().getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setTimestamp(1, data.getFechaBoleta());
             ps.setInt(2, data.getIdCliente());
 
@@ -28,12 +29,17 @@ public class VentasDAO implements CRUD<TVenta> {
 
             if (rowsAffected > 0) {
                 System.out.println("boleta registrado exitosamente: ");
+                ResultSet llavegenerada = ps.getGeneratedKeys();
+                if(llavegenerada.next()){
+                    idboleta = llavegenerada.getInt(1);
+                }
             } else {
                 System.out.println("Error al registrar boleta.");
             }
         } catch (SQLException e) {
-            System.out.println("Error al registrar el boleta: " + e.getMessage());
+            System.out.println("Error al registrar boleta: " + e.getMessage());
         }
+        return idboleta;
     }
 
     @Override

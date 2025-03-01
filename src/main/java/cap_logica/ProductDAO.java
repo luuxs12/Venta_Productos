@@ -20,7 +20,7 @@ public class ProductDAO implements CRUD<Producto>  {
     
     
     @Override
-    public void registrar(Producto data) {
+    public Integer registrar(Producto data) {
 
         PreparedStatement ps = null;
 
@@ -42,6 +42,7 @@ public class ProductDAO implements CRUD<Producto>  {
         } catch (SQLException e) {
             System.out.println("Error al registrar el producto: " + e.getMessage());
         }
+        return null;
 
     }
 
@@ -55,8 +56,8 @@ public class ProductDAO implements CRUD<Producto>  {
             while (rs.next()) {
                 Producto c = new Producto(
                         rs.getInt(1),
-                        rs.getDouble(2),
-                        rs.getString(3),
+                        rs.getString(2),
+                        rs.getDouble(3),
                         rs.getInt(4)
                 );
                 datos.add(c);
@@ -87,9 +88,9 @@ public class ProductDAO implements CRUD<Producto>  {
             if (rs.next()) {
                 p = new Producto();
                 p.setIdProducto(rs.getInt(1));
-                p.setNombre(rs.getString(3));
+                p.setNombre(rs.getString(2));
+                p.setPrecioProducto(rs.getDouble(3));
                 p.setStock(rs.getInt(4));
-                p.setPrecioProducto(rs.getDouble(2));
             } else {
                 System.out.println("No se encontró un producto con ID: " + id);
             }
@@ -110,9 +111,9 @@ public class ProductDAO implements CRUD<Producto>  {
         for (Producto producto : productos) {
             tableModel.addRow(new Object[]{
                 producto.getIdProducto(),
+                producto.getNombre(),
                 producto.getPrecioProducto(),
                 producto.getStock(),
-
             });
 
         }

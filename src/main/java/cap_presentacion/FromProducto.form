@@ -144,6 +144,9 @@
           </Properties>
         </Component>
         <Component class="javax.swing.JTextField" name="txtidproducto">
+          <Properties>
+            <Property name="enabled" type="boolean" value="false"/>
+          </Properties>
           <Events>
             <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="txtidproductoActionPerformed"/>
           </Events>
@@ -183,6 +186,9 @@
               <TableHeader reorderingAllowed="true" resizingAllowed="true"/>
             </Property>
           </Properties>
+          <Events>
+            <EventHandler event="mousePressed" listener="java.awt.event.MouseListener" parameters="java.awt.event.MouseEvent" handler="tbproductosMousePressed"/>
+          </Events>
         </Component>
       </SubComponents>
     </Container>

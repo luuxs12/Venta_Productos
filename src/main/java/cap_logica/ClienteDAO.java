@@ -13,7 +13,7 @@ public class ClienteDAO implements CRUD<TCliente> {
 
 
     @Override
-    public void registrar(TCliente data) {
+    public Integer registrar(TCliente data) {
 
         PreparedStatement ps = null;
 
@@ -35,7 +35,8 @@ public class ClienteDAO implements CRUD<TCliente> {
         } catch (SQLException e) {
             System.out.println("Error al registrar el cliente: " + e.getMessage());
         }
-
+        
+        return null;
     }
 
     @Override
