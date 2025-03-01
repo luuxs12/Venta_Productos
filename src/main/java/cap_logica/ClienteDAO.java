@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClienteDAO implements CRUD<TCliente> {
 
-    private int id;
 
     @Override
     public void registrar(TCliente data) {
@@ -70,7 +69,6 @@ public class ClienteDAO implements CRUD<TCliente> {
     public TCliente consultarPorId(int id) {
         TCliente c = new TCliente(null, null, 0);
         String sql = "select * from cliente where idcliente=?";
-        this.id = id;
 
         PreparedStatement ps = null;
 
@@ -143,7 +141,6 @@ public class ClienteDAO implements CRUD<TCliente> {
     @Override
     public void Eliminar(int id) {
         String sql = "DELETE FROM cliente where idcliente=?";
-        this.id = id;
 
         PreparedStatement ps = null;
 
