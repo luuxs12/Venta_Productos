@@ -84,7 +84,7 @@ public class CConexion {
     public CConexion() {
         try {
             Class.forName("com.mysql.cj.jdbc.Driver");
-            con = DriverManager.getConnection("jdbc:mysql://localhost/dbpos", "root", "");
+            con = DriverManager.getConnection("jdbc:mysql://localhost/dbpos", "root", "123456");
             System.out.println("conexion exitosa");
         } catch (Exception e) {
             System.out.println("conexion fallida");
