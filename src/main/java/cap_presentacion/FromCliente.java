@@ -18,7 +18,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
     int id;
     ClienteDAO cltVM = new ClienteDAO();
     private DefaultTableModel tableModel;
-    TCliente tcliente = new TCliente(null, null, 0);
+    TCliente tcliente = new TCliente();
 
     public FromCliente() {
         initComponents();
@@ -36,7 +36,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
         txtDni.setText("");
     }
 
-    private void modificarCliente() {
+    private void llenarDatosCliente() {
         int filaseleccionado = tbClientes.getSelectedRow();
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
@@ -306,8 +306,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
         } else {
             id = (Integer) tbClientes.getValueAt(fila, 0);
             tcliente = cltVM.consultarPorId(id);
-            modificarCliente();
-
+            llenarDatosCliente();
         }
     }//GEN-LAST:event_tbClientesMousePressed
 

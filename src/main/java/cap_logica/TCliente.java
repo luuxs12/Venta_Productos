@@ -10,23 +10,23 @@ public class TCliente extends Persona{
         this.dni = dni;
     }
 
-    public TCliente(int idProducto,String nombre, String apellido,int dni ) {
+    public TCliente(int id,String nombre, String apellido,int dni ) {
         super(nombre, apellido);
-        this.id = idProducto;
+        this.id = id;
         this.dni = dni;
     }
 
-
-
-
+    public TCliente() {
+    }
 
     public int getId() {
         return id;
     }
 
-    public void setId(int idProducto) {
-        this.id = idProducto;
+    public void setId(int id) {
+        this.id = id;
     }
+
 
     public int getDni() {
         return dni;
