@@ -8,6 +8,7 @@ cap_bd\CConexion.class
 cap_presentacion\FromCliente$2.class
 cap_logica\Persona.class
 cap_presentacion\FromCliente$4.class
+cap_presentacion\FromVentas$2.class
 cap_presentacion\MenuPrincipal$5.class
 cap_presentacion\FromProducto.class
 cap_logica\Producto.class

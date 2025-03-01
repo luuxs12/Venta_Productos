@@ -82,12 +82,11 @@ public class FromVentas extends javax.swing.JInternalFrame {
         jTextField10 = new javax.swing.JTextField();
         jPanel6 = new javax.swing.JPanel();
         jLabel13 = new javax.swing.JLabel();
-        jTextField11 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
-        jButton2 = new javax.swing.JButton();
+        txtPrecioModificado = new javax.swing.JTextField();
         jLabel14 = new javax.swing.JLabel();
         jTextField12 = new javax.swing.JTextField();
         jButton3 = new javax.swing.JButton();
+        chkModificarPrecio = new javax.swing.JCheckBox();
         jPanel7 = new javax.swing.JPanel();
         jLabel15 = new javax.swing.JLabel();
         jLabel16 = new javax.swing.JLabel();
@@ -281,13 +280,18 @@ public class FromVentas extends javax.swing.JInternalFrame {
 
         jLabel13.setText("Precio de venta");
 
-        jButton1.setText("Habilitar");
-
-        jButton2.setText("Deshabilitar");
+        txtPrecioModificado.setEnabled(false);
 
         jLabel14.setText("Cantidad");
 
         jButton3.setText("Agregar Producto");
+
+        chkModificarPrecio.setText("Modificar");
+        chkModificarPrecio.addChangeListener(new javax.swing.event.ChangeListener() {
+            public void stateChanged(javax.swing.event.ChangeEvent evt) {
+                chkModificarPrecioStateChanged(evt);
+            }
+        });
 
         javax.swing.GroupLayout jPanel6Layout = new javax.swing.GroupLayout(jPanel6);
         jPanel6.setLayout(jPanel6Layout);
@@ -300,12 +304,10 @@ public class FromVentas extends javax.swing.JInternalFrame {
                     .addGroup(jPanel6Layout.createSequentialGroup()
                         .addComponent(jLabel13)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton1, javax.swing.GroupLayout.PREFERRED_SIZE, 76, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addGap(18, 18, 18)
-                        .addComponent(jButton2)
-                        .addGap(48, 48, 48)
+                        .addComponent(txtPrecioModificado, javax.swing.GroupLayout.PREFERRED_SIZE, 94, javax.swing.GroupLayout.PREFERRED_SIZE)
+                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addComponent(chkModificarPrecio)
+                        .addGap(132, 132, 132)
                         .addComponent(jLabel14)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                         .addComponent(jTextField12)))
@@ -317,11 +319,10 @@ public class FromVentas extends javax.swing.JInternalFrame {
                 .addContainerGap()
                 .addGroup(jPanel6Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel13)
-                    .addComponent(jTextField11, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1)
-                    .addComponent(jButton2)
+                    .addComponent(txtPrecioModificado, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
                     .addComponent(jLabel14)
-                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE))
+                    .addComponent(jTextField12, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(chkModificarPrecio))
                 .addGap(18, 18, 18)
                 .addComponent(jButton3, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addContainerGap())
@@ -532,10 +533,17 @@ public class FromVentas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_tbClientesMousePressed
 
+    private void chkModificarPrecioStateChanged(javax.swing.event.ChangeEvent evt) {//GEN-FIRST:event_chkModificarPrecioStateChanged
+        if (chkModificarPrecio.isSelected()){
+       txtPrecioModificado.setEnabled(true);
+        }else{
+        txtPrecioModificado.setEnabled(false);
+        }
+    }//GEN-LAST:event_chkModificarPrecioStateChanged
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
-    private javax.swing.JButton jButton2;
+    private javax.swing.JCheckBox chkModificarPrecio;
     private javax.swing.JButton jButton3;
     private javax.swing.JButton jButton4;
     private javax.swing.JButton jButton5;
@@ -574,7 +582,6 @@ public class FromVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTable jTable3;
     private javax.swing.JTextField jTextField1;
     private javax.swing.JTextField jTextField10;
-    private javax.swing.JTextField jTextField11;
     private javax.swing.JTextField jTextField12;
     private javax.swing.JTextField jTextField2;
     private javax.swing.JTextField jTextField7;
@@ -584,6 +591,7 @@ public class FromVentas extends javax.swing.JInternalFrame {
     private javax.swing.JTextField txtApellidoCliente;
     private javax.swing.JTextField txtDni;
     private javax.swing.JTextField txtNombreCliente;
+    private javax.swing.JTextField txtPrecioModificado;
     private javax.swing.JTextField txtid;
     // End of variables declaration//GEN-END:variables
 
