@@ -2,13 +2,20 @@
  * Click nbfs://nbhost/SystemFileSystem/Templates/Licenses/license-default.txt to change this license
  * Click nbfs://nbhost/SystemFileSystem/Templates/Classes/Class.java to edit this template
  */
-package cap_logica;
+package cap_logica.model;
 
 /**
  *
- * @author Administrator
+ * @author eramos
+ *  This is a clear example of persistence classes. TProducto is like Productos in the Database
  */
 public class TProducto {
+    
+    private Integer idproducto;
+    private Double precioProducto;
+    private String nombre;
+    private Integer stock;
+    
     
     public TProducto(){}
     
@@ -51,11 +58,5 @@ public class TProducto {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-
-    private Integer idproducto;
-    private Double precioProducto;
-    private String nombre;
-    private Integer stock;
-    
     
 }

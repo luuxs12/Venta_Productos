@@ -1,4 +1,4 @@
-package cap_logica;
+package cap_logica.model;
 abstract  class Persona {
     protected String nombre;
     protected String apellido;
@@ -10,7 +10,5 @@ abstract  class Persona {
 
     public Persona() {
     }
-    
-    
     
 }

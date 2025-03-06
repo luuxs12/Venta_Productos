@@ -1,4 +1,4 @@
-package cap_logica;
+package cap_logica.model;
 public class TDetalle {
     private int idDetalle;
     private int idBoleta;

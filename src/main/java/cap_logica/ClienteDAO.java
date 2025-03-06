@@ -1,7 +1,7 @@
 package cap_logica;
 
-import cap_bd.CConexion;
-import java.sql.Connection;
+import cap_logica.model.TCliente;
+import cap_bd.ConexionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -9,7 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class ClienteDAO implements CRUD<TCliente> {
+public class ClienteDAO implements Crud<TCliente> {
 
 
     @Override
@@ -20,7 +20,7 @@ public class ClienteDAO implements CRUD<TCliente> {
         String sql = "INSERT INTO cliente (nombres, apellidos, dni) VALUES (?, ?, ?)";
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setString(1, data.getNombre());
             ps.setString(2, data.getApellido());
             ps.setInt(3, data.getDni());
@@ -44,7 +44,7 @@ public class ClienteDAO implements CRUD<TCliente> {
         List<TCliente> datos = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
 
-        try ( PreparedStatement ps = CConexion.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TCliente c = new TCliente(
@@ -62,7 +62,7 @@ public class ClienteDAO implements CRUD<TCliente> {
     }
 
     @Override
-    public void Eliminar() {
+    public void eliminarTodo() {
 
     }
 
@@ -74,7 +74,7 @@ public class ClienteDAO implements CRUD<TCliente> {
         PreparedStatement ps = null;
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -114,12 +114,12 @@ public class ClienteDAO implements CRUD<TCliente> {
     }
 
     @Override
-    public void Actualizar(TCliente data) {
+    public void actualizar(TCliente data) {
         String sql = "UPDATE cliente SET nombres = ?, apellidos = ?, dni = ? WHERE idcliente = ?";
 
         PreparedStatement ps = null;
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             // Asignar los valores del cliente al PreparedStatement
             ps.setString(1, data.getNombre());
             ps.setString(2, data.getApellido());
@@ -140,13 +140,13 @@ public class ClienteDAO implements CRUD<TCliente> {
     }
 
     @Override
-    public void Eliminar(int id) {
+    public void eliminar(int id) {
         String sql = "DELETE FROM cliente where idcliente=?";
 
         PreparedStatement ps = null;
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             // Ejecutar la inserción
             int rowsAffected = ps.executeUpdate();

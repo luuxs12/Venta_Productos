@@ -1,8 +1,8 @@
 package cap_logica;
 
-import cap_bd.CConexion;
+import cap_logica.model.TVenta;
+import cap_bd.ConexionDB;
 
-import java.sql.PreparedStatement;
 import java.sql.*;
 import java.sql.SQLException;
 import java.sql.PreparedStatement;
@@ -11,7 +11,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class VentasDAO implements CRUD<TVenta> {
+public class VentasDAO implements Crud<TVenta> {
 
     @Override
     public Integer registrar(TVenta data) {
@@ -21,7 +21,7 @@ public class VentasDAO implements CRUD<TVenta> {
         String sql = "INSERT INTO boleta (fechaBoleta, fkcliente) VALUES (?, ?)";
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
             ps.setTimestamp(1, data.getFechaBoleta());
             ps.setInt(2, data.getIdCliente());
 
@@ -47,7 +47,7 @@ public class VentasDAO implements CRUD<TVenta> {
         List<TVenta> datos = new ArrayList<>();
          String sql = "SELECT * FROM boleta";
 
-        try ( PreparedStatement ps = CConexion.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TVenta v = new TVenta(
@@ -65,7 +65,7 @@ public class VentasDAO implements CRUD<TVenta> {
     }
 
     @Override
-    public void Eliminar() {
+    public void eliminarTodo() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -80,12 +80,12 @@ public class VentasDAO implements CRUD<TVenta> {
     }
 
     @Override
-    public void Actualizar(TVenta data) {
+    public void actualizar(TVenta data) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void Eliminar(int id) {
+    public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 

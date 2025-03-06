@@ -5,9 +5,7 @@
 package cap_presentacion;
 
 import cap_logica.ProductDAO;
-import cap_logica.TProducto;
-import cap_logica.TCliente;
-import static cap_presentacion.FromCliente.mostrarConfirmacion;
+import cap_logica.model.TProducto;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -70,7 +68,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
         } else {
             if (mostrarConfirmacion("¿Estás seguro de eliminar cliente id : " + tproduct.getIdProducto() + "?", "Confirmar Eliminación")) {
-                productoDAO.Eliminar(id);
+                productoDAO.eliminar(id);
             }
             
         }
@@ -288,7 +286,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
         product.setPrecioProducto(precioProducto);
         product.setStock(stock);
         
-        productoDAO.Actualizar(product);
+        productoDAO.actualizar(product);
         productoDAO.cargarDatosTabla(tableModel);
          limpiarForm();
         

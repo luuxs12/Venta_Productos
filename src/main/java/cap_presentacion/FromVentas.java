@@ -8,16 +8,18 @@ import cap_logica.BoletaPDF;
 import cap_logica.ClienteDAO;
 import cap_logica.DetallesDAO;
 import cap_logica.ProductDAO;
-import cap_logica.TBoletaPDF;
-import cap_logica.TProducto;
-import cap_logica.TCliente;
-import cap_logica.TDetalle;
-import cap_logica.TVenta;
+import cap_logica.model.TBoletaPDF;
+import cap_logica.model.TProducto;
+import cap_logica.model.TCliente;
+import cap_logica.model.TDetalle;
+import cap_logica.model.TVenta;
 import cap_logica.VentasDAO;
+import java.awt.HeadlessException;
 import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
+import java.util.HashMap;
 import java.util.List;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
@@ -27,13 +29,14 @@ import utils.CalendarTime;
  *
  * @author Administrator
  */
-public class FromVentas extends javax.swing.JInternalFrame {
+public final class FromVentas extends javax.swing.JInternalFrame {
 
     private int id;
     private ClienteDAO cltDAO = new ClienteDAO();
     private ProductDAO productDAO = new ProductDAO();
     private DefaultTableModel tableModelCliente, tableModelProducto, tableModelBoleta;
-    private List<TDetalle> listaDetalle = new ArrayList();
+    private HashMap<TCliente, List<TDetalle>> comprasEnCurso = new HashMap();
+
     private TCliente tcliente = new TCliente();
     private TProducto tproducto = new TProducto();
     private VentasDAO ventaDAO = new VentasDAO();
@@ -80,7 +83,6 @@ public class FromVentas extends javax.swing.JInternalFrame {
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "producto no seleccionado");
         } else {
-
             txtidProduct.setText(String.valueOf(tproducto.getIdProducto()));
             txtNombreProduct.setText(tproducto.getNombre());
             txtPrecio.setText(tproducto.getPrecioProducto().toString());
@@ -505,7 +507,7 @@ public class FromVentas extends javax.swing.JInternalFrame {
         lblTotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblTotal.setText("....");
 
-        btnGenerarVenta.setText("Cobrar");
+        btnGenerarVenta.setText("Generar Boleta");
         btnGenerarVenta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
                 btnGenerarVentaActionPerformed(evt);
@@ -607,6 +609,7 @@ public class FromVentas extends javax.swing.JInternalFrame {
         } else {
             id = (Integer) tbClientes.getValueAt(fila, 0);
             tcliente = cltDAO.consultarPorId(id);
+            comprasEnCurso.put(tcliente, new ArrayList<>());
             llenarDatosCliente();
         }
 
@@ -656,10 +659,10 @@ public class FromVentas extends javax.swing.JInternalFrame {
         detalle.setCantidad(Integer.parseInt(txtcantidad.getText()));
         detalle.setPrecioVenta(subtotal);
 
-        listaDetalle.add(detalle);
+        comprasEnCurso.get(tcliente).add(detalle);
         double suma = 0;
 
-        for (TDetalle tDetalle : listaDetalle) {
+        for (TDetalle tDetalle : comprasEnCurso.get(tcliente)) {
             suma += tDetalle.getPrecioVenta();
         }
 
@@ -686,8 +689,10 @@ public class FromVentas extends javax.swing.JInternalFrame {
         tableModelBoleta.setRowCount(0);
         tbClientes.clearSelection();
         tbProducto.clearSelection();
-        listaDetalle.clear();
+        comprasEnCurso.clear();
         txtcantidad.setText("");
+        txtPrecioModificado.setText("");
+        chkModificarPrecio.setSelected(false);
         lblIGV.setText("");
         lblTotal.setText("");
     }
@@ -702,23 +707,22 @@ public class FromVentas extends javax.swing.JInternalFrame {
             tventa.setFechaBoleta(fechaActualEnMillisegundo);
 
             Integer idBoleta = ventaDAO.registrar(tventa);
-
+            List<TDetalle> detallesDelCliente = comprasEnCurso.get(tcliente);
             if (idBoleta != null) {
-                for (TDetalle tDetalle : listaDetalle) {
+                for (TDetalle tDetalle : detallesDelCliente ) {
                     tDetalle.setIdBoleta(idBoleta);
                     detalleDAO.registrar(tDetalle);
-
                 }
             }
-            TBoletaPDF boletaData = new TBoletaPDF(tcliente, listaDetalle, fechaActualEnMillisegundo);
-            boletaPdf.generarFacturaPDF(boletaData);
+            TBoletaPDF boletaData = new TBoletaPDF(tcliente,detallesDelCliente, fechaActualEnMillisegundo);
+            boletaPdf.generateBoletaPDF(boletaData);
             JOptionPane.showMessageDialog(null, "Se ha generado correctamente la boleta: " + idBoleta);
             cleanForms();
-        } catch (Exception e) {
+        } catch (HeadlessException | NumberFormatException e) {
             JOptionPane.showMessageDialog(null, "Failed: " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
-
+   
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProduct;

@@ -8,7 +8,6 @@ import java.util.Calendar;
 
 public class CalendarTime {
 
-
     public Timestamp JDateChooserATimestamp(JDateChooser dateChooser) {
         Date fechaDate = dateChooser.getDate(); // Obtener la fecha seleccionada
         return (fechaDate != null) ? new Timestamp(fechaDate.getTime()) : null;
@@ -27,9 +26,21 @@ public class CalendarTime {
         SimpleDateFormat sdf = new SimpleDateFormat("yyyy-MM-dd HH:mm:ss:S");
         return sdf.format(new Date()); // Devuelve la fecha actual formateada
     }
-    
-    public Timestamp convertirCalendarATimestamp(Calendar calendar) {
-    return (calendar != null) ? new Timestamp(calendar.getTimeInMillis()) : null;
-}
 
+    public Timestamp convertirCalendarATimestamp(Calendar calendar) {
+        return (calendar != null) ? new Timestamp(calendar.getTimeInMillis()) : null;
+    }
+
+    public static String getCurrentDate() {
+        Date date = new Date();
+        String fechaActual = new SimpleDateFormat("yyyy/MM/dd").format(date);
+        //cambiar el formato de la fecha de / a _
+        String fechaNueva = "";
+        for (int i = 0; i < fechaActual.length(); i++) {
+            if (fechaActual.charAt(i) == '/') {
+                fechaNueva = fechaActual.replace("/", "_");
+            }
+        }
+        return fechaNueva;
+    }
 }

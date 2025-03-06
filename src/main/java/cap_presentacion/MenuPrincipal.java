@@ -4,10 +4,9 @@
  */
 package cap_presentacion;
 
-import cap_bd.CConexion;
+import cap_bd.ConexionDB;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
-import java.sql.Connection;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
@@ -27,7 +26,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         jPanel1.add(frmProduct);
         jPanel1.add(frmVentas);
         setExtendedState(MAXIMIZED_BOTH);
-        CConexion.getInstancia().getConnection();
+        ConexionDB.getInstancia().getConnection();
 
     }
 

@@ -1,6 +1,7 @@
 package cap_logica;
 
-import cap_bd.CConexion;
+import cap_logica.model.TDetalle;
+import cap_bd.ConexionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -8,9 +9,7 @@ import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
-public class DetallesDAO implements CRUD<TDetalle> {
-
-    private VentasDAO ventaDAO= new VentasDAO();
+public class DetallesDAO implements Crud<TDetalle> {
     
     @Override
     public Integer registrar(TDetalle data) {
@@ -19,7 +18,7 @@ public class DetallesDAO implements CRUD<TDetalle> {
         String sql = "INSERT INTO detalle (fkboleta, fkproducto,cantidad,precioVenta) VALUES (?, ?,?,?)";
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, data.getIdBoleta());
             ps.setInt(2, data.getIdProducto());
             ps.setInt(3, data.getCantidad());
@@ -44,7 +43,7 @@ public class DetallesDAO implements CRUD<TDetalle> {
     }
 
     @Override
-    public void Eliminar() {
+    public void eliminarTodo() {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
@@ -56,7 +55,7 @@ public class DetallesDAO implements CRUD<TDetalle> {
         List<TDetalle>datos = new ArrayList(); 
         
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -83,25 +82,15 @@ public class DetallesDAO implements CRUD<TDetalle> {
     }
 
     @Override
-    public void Actualizar(TDetalle data) {
+    public void actualizar(TDetalle data) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
     @Override
-    public void Eliminar(int id) {
+    public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
     
-   /*public Integer generarIdVenta() {
-        // Obtener la cantidad de órdenes ya registradas hoy
-       List<TVenta> ventas = ventaDAO.listar();
-        int contador =    ventas.get(ventas.size() - 1).getIdboleta() + 1 ; // Incrementar el número de orden
-        
-       
-        // Formar el código de orden único
-        return contador;
-    }*/
-
     @Override
     public TDetalle consultarPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody

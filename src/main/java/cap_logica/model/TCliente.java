@@ -1,5 +1,5 @@
 
-package cap_logica;
+package cap_logica.model;
 
 public class TCliente extends Persona{
     private int id;

@@ -1,4 +1,4 @@
-package cap_logica;
+package cap_logica.model;
 
 import java.sql.Timestamp;
 
@@ -13,10 +13,8 @@ public class TVenta {
         this.idCliente = idCliente;
     }
 
-    public TVenta() {
-    }
+    public TVenta() {}
 
-    
     
     public int getIdboleta() {
         return idboleta;

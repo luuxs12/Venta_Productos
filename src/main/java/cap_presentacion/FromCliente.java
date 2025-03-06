@@ -5,7 +5,7 @@
 package cap_presentacion;
 
 import cap_logica.ClienteDAO;
-import cap_logica.TCliente;
+import cap_logica.model.TCliente;
 import javax.swing.JOptionPane;
 import javax.swing.table.DefaultTableModel;
 
@@ -41,12 +41,10 @@ public class FromCliente extends javax.swing.JInternalFrame {
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
         } else {
-
             txtid.setText(String.valueOf(tcliente.getId()));
             txtNombreCliente.setText(tcliente.getNombre());
             txtApellidoCliente.setText(tcliente.getApellido());
             txtDni.setText(String.valueOf(tcliente.getDni()));
-
         }
 
     }
@@ -68,7 +66,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
         } else {
             if (mostrarConfirmacion("¿Estás seguro de eliminar cliente id : " + tcliente.getId() + "?", "Confirmar Eliminación")) {
-                cltVM.Eliminar(id);
+                cltVM.eliminar(id);
             }
 
         }
@@ -286,7 +284,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
 
         TCliente cliente = new TCliente(id, nombre, apellido, dni);
 
-        cltVM.Actualizar(cliente);
+        cltVM.actualizar(cliente);
         cltVM.cargarDatosTabla(tableModel);
         limpiarform();
     }//GEN-LAST:event_btnmodificarActionPerformed

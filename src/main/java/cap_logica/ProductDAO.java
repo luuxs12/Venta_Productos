@@ -4,7 +4,8 @@
  */
 package cap_logica;
 
-import cap_bd.CConexion;
+import cap_logica.model.TProducto;
+import cap_bd.ConexionDB;
 import java.sql.PreparedStatement;
 import java.sql.ResultSet;
 import java.sql.SQLException;
@@ -14,9 +15,9 @@ import javax.swing.table.DefaultTableModel;
 
 /**
  *
- * @author lee_j
+ * @author eramos
  */
-public class ProductDAO implements CRUD<TProducto>  {
+public class ProductDAO implements Crud<TProducto>  {
     
     
     @Override
@@ -27,7 +28,7 @@ public class ProductDAO implements CRUD<TProducto>  {
         String sql = "INSERT INTO producto (nombre, precioProducto, stock) VALUES (?, ?, ?)";
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setString(1, data.getNombre());
             ps.setDouble(2, data.getPrecioProducto());
             ps.setInt(3, data.getStock());
@@ -51,7 +52,7 @@ public class ProductDAO implements CRUD<TProducto>  {
         List<TProducto> datos = new ArrayList<>();
         String sql = "SELECT * FROM producto";
 
-        try ( PreparedStatement ps = CConexion.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TProducto c = new TProducto(
@@ -69,7 +70,7 @@ public class ProductDAO implements CRUD<TProducto>  {
     }
 
     @Override
-    public void Eliminar() {
+    public void eliminarTodo() {
 
     }
 
@@ -81,7 +82,7 @@ public class ProductDAO implements CRUD<TProducto>  {
         PreparedStatement ps = null;
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
@@ -121,12 +122,12 @@ public class ProductDAO implements CRUD<TProducto>  {
     }
 
     @Override
-    public void Actualizar(TProducto data) {
+    public void actualizar(TProducto data) {
         String sql = "UPDATE producto SET precioProducto = ?, stock = ?, nombre = ? WHERE idproducto = ?";
 
         PreparedStatement ps = null;
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             // Asignar los valores del producto al PreparedStatement
             ps.setDouble(1, data.getPrecioProducto());
             ps.setInt(2, data.getStock());
@@ -147,24 +148,23 @@ public class ProductDAO implements CRUD<TProducto>  {
     }
 
     @Override
-    public void Eliminar(int id) {
+    public void eliminar(int id) {
         String sql = "DELETE FROM producto where idproducto=?";
 
         PreparedStatement ps = null;
 
         try {
-            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
-            // Ejecutar la inserción
+            // Ejecutar la sql
             int rowsAffected = ps.executeUpdate();
-
             // Confirmación en consola
             if (rowsAffected > 0) {
                 System.out.println("Producto eliminado exitosamente: " + id);
             } else {
                 System.out.println("Error al eliminado el producto.");
             }
-
+   
         } catch (Exception e) {
             System.out.println("Error al consultarid del producto: " + e.getMessage());
         }
