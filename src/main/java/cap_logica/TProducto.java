@@ -8,11 +8,11 @@ package cap_logica;
  *
  * @author Administrator
  */
-public class Producto {
+public class TProducto {
     
-    public Producto(){}
+    public TProducto(){}
     
-    public Producto(Integer idProducto, String nombre, Double precioProducto, Integer stock) {
+    public TProducto(Integer idProducto, String nombre, Double precioProducto, Integer stock) {
         this.idproducto = idProducto;
         this.precioProducto = precioProducto;
         this.nombre = nombre;

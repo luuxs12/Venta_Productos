@@ -2,7 +2,9 @@ package cap_logica;
 
 import cap_bd.CConexion;
 import java.sql.PreparedStatement;
+import java.sql.ResultSet;
 import java.sql.SQLException;
+import java.util.ArrayList;
 import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
@@ -46,9 +48,33 @@ public class DetallesDAO implements CRUD<TDetalle> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-    @Override
-    public TDetalle consultarPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+  
+    public List<TDetalle> getDetallesByBoletaId(int id) {
+         String sql = "SELECT * FROM detalle where fkBoleta = ? ";
+        
+        PreparedStatement ps = null;
+        List<TDetalle>datos = new ArrayList(); 
+        
+        try {
+            ps = CConexion.getInstancia().getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+           while (rs.next()) {
+                TDetalle c = new TDetalle();
+                c.setIdDetalle(rs.getInt(1));
+                c.setIdBoleta(rs.getInt(2));
+                c.setIdProducto(rs.getInt(3));
+                c.setCantidad(rs.getInt(4))  ;
+                c.setPrecioVenta(rs.getDouble(5));
+                datos.add(c);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al consultarid del cliente: " + e.getMessage());
+        }
+        return datos;
+ 
     }
 
     @Override
@@ -75,6 +101,11 @@ public class DetallesDAO implements CRUD<TDetalle> {
         // Formar el código de orden único
         return contador;
     }*/
+
+    @Override
+    public TDetalle consultarPorId(int id) {
+        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+    }
 
 
 }

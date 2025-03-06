@@ -16,11 +16,11 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author lee_j
  */
-public class ProductDAO implements CRUD<Producto>  {
+public class ProductDAO implements CRUD<TProducto>  {
     
     
     @Override
-    public Integer registrar(Producto data) {
+    public Integer registrar(TProducto data) {
 
         PreparedStatement ps = null;
 
@@ -47,14 +47,14 @@ public class ProductDAO implements CRUD<Producto>  {
     }
 
     @Override
-    public List<Producto> listar() {
-        List<Producto> datos = new ArrayList<>();
+    public List<TProducto> listar() {
+        List<TProducto> datos = new ArrayList<>();
         String sql = "SELECT * FROM producto";
 
         try ( PreparedStatement ps = CConexion.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
-                Producto c = new Producto(
+                TProducto c = new TProducto(
                         rs.getInt(1),
                         rs.getString(2),
                         rs.getDouble(3),
@@ -74,8 +74,8 @@ public class ProductDAO implements CRUD<Producto>  {
     }
 
     @Override
-    public Producto consultarPorId(int id) {
-        Producto p = null; 
+    public TProducto consultarPorId(int id) {
+        TProducto p = null; 
         String sql = "select * from producto where idproducto=?";
 
         PreparedStatement ps = null;
@@ -86,7 +86,7 @@ public class ProductDAO implements CRUD<Producto>  {
             ResultSet rs = ps.executeQuery();
 
             if (rs.next()) {
-                p = new Producto();
+                p = new TProducto();
                 p.setIdProducto(rs.getInt(1));
                 p.setNombre(rs.getString(2));
                 p.setPrecioProducto(rs.getDouble(3));
@@ -104,11 +104,11 @@ public class ProductDAO implements CRUD<Producto>  {
 
     @Override
     public void cargarDatosTabla(DefaultTableModel tableModel) {
-        List<Producto> productos = listar();
+        List<TProducto> productos = listar();
 
         tableModel.setRowCount(0);
 
-        for (Producto producto : productos) {
+        for (TProducto producto : productos) {
             tableModel.addRow(new Object[]{
                 producto.getIdProducto(),
                 producto.getNombre(),
@@ -121,7 +121,7 @@ public class ProductDAO implements CRUD<Producto>  {
     }
 
     @Override
-    public void Actualizar(Producto data) {
+    public void Actualizar(TProducto data) {
         String sql = "UPDATE producto SET precioProducto = ?, stock = ?, nombre = ? WHERE idproducto = ?";
 
         PreparedStatement ps = null;

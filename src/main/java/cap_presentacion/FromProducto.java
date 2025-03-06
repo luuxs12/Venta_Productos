@@ -5,7 +5,7 @@
 package cap_presentacion;
 
 import cap_logica.ProductDAO;
-import cap_logica.Producto;
+import cap_logica.TProducto;
 import cap_logica.TCliente;
 import static cap_presentacion.FromCliente.mostrarConfirmacion;
 import javax.swing.JOptionPane;
@@ -18,7 +18,7 @@ import javax.swing.table.DefaultTableModel;
 public class FromProducto extends javax.swing.JInternalFrame {
     
     private int id;
-    Producto tproduct = new Producto();
+    TProducto tproduct = new TProducto();
     private DefaultTableModel tableModel;
     
     ProductDAO productoDAO = new ProductDAO();
@@ -264,7 +264,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
         double precioProducto = Double.parseDouble(txtprecioproducto.getText());
         int stock = Integer.parseInt(txtstockproducto.getText());
         
-        Producto product = new Producto();
+        TProducto product = new TProducto();
         product.setNombre(nombre);
         product.setPrecioProducto(precioProducto);
         product.setStock(stock);
@@ -282,7 +282,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
         double precioProducto = Double.parseDouble(txtprecioproducto.getText());
         int stock = Integer.parseInt(txtstockproducto.getText());
         
-        Producto product = new Producto();
+        TProducto product = new TProducto();
         product.setIdProducto(id);
         product.setNombre(nombre);
         product.setPrecioProducto(precioProducto);

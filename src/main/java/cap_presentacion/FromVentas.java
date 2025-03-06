@@ -4,17 +4,17 @@
  */
 package cap_presentacion;
 
+import cap_logica.BoletaPDF;
 import cap_logica.ClienteDAO;
 import cap_logica.DetallesDAO;
 import cap_logica.ProductDAO;
-import cap_logica.Producto;
+import cap_logica.TBoletaPDF;
+import cap_logica.TProducto;
 import cap_logica.TCliente;
 import cap_logica.TDetalle;
 import cap_logica.TVenta;
 import cap_logica.VentasDAO;
-import static com.sun.java.accessibility.util.AWTEventMonitor.addWindowListener;
-import java.awt.event.WindowAdapter;
-import java.awt.event.WindowEvent;
+import java.sql.Timestamp;
 import java.util.ArrayList;
 import java.util.Calendar;
 import java.util.GregorianCalendar;
@@ -35,10 +35,11 @@ public class FromVentas extends javax.swing.JInternalFrame {
     private DefaultTableModel tableModelCliente, tableModelProducto, tableModelBoleta;
     private List<TDetalle> listaDetalle = new ArrayList();
     private TCliente tcliente = new TCliente();
-    private Producto tproducto = new Producto();
+    private TProducto tproducto = new TProducto();
     private VentasDAO ventaDAO = new VentasDAO();
     private DetallesDAO detalleDAO = new DetallesDAO();
     private CalendarTime caltime = new CalendarTime();
+    private BoletaPDF boletaPdf = new BoletaPDF();
 
     public FromVentas() {
         initComponents();
@@ -50,7 +51,7 @@ public class FromVentas extends javax.swing.JInternalFrame {
         tbClientes.setModel(tableModelCliente);
         tbProducto.setModel(tableModelProducto);
         actulizarTabla();
-       //lblIdBoleta.setText(String.valueOf(detalleDAO.generarIdVenta()));
+        //lblIdBoleta.setText(String.valueOf(detalleDAO.generarIdVenta()));
 
     }
 
@@ -66,12 +67,10 @@ public class FromVentas extends javax.swing.JInternalFrame {
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
         } else {
-
             txtidCliente.setText(String.valueOf(tcliente.getId()));
             txtNombreCliente.setText(tcliente.getNombre());
             txtApellidoCliente.setText(tcliente.getApellido());
             txtDni.setText(String.valueOf(tcliente.getDni()));
-
         }
 
     }
@@ -472,7 +471,7 @@ public class FromVentas extends javax.swing.JInternalFrame {
         jPanel7.setBorder(javax.swing.BorderFactory.createTitledBorder("Resumen de Venta"));
 
         jLabel15.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
-        jLabel15.setText("Última Boleta Creada:");
+        jLabel15.setText("Detalles de Venta");
 
         lblIdBoleta.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         lblIdBoleta.setText("....");
@@ -673,26 +672,51 @@ public class FromVentas extends javax.swing.JInternalFrame {
 
     }//GEN-LAST:event_btnAgregarProductActionPerformed
 
+    private void cleanForms() {
+        txtidCliente.setText("");
+        txtNombreCliente.setText("");
+        txtApellidoCliente.setText("");
+        txtDni.setText("");
+        txtidProduct.setText("");
+        txtNombreProduct.setText("");
+        txtPrecio.setText("");
+        txtStock.setText("");
+        tcliente = null;
+        tproducto = null;
+        tableModelBoleta.setRowCount(0);
+        tbClientes.clearSelection();
+        tbProducto.clearSelection();
+        listaDetalle.clear();
+        txtcantidad.setText("");
+        lblIGV.setText("");
+        lblTotal.setText("");
+    }
+
     private void btnGenerarVentaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnGenerarVentaActionPerformed
-        Calendar fechaActual = new GregorianCalendar();
 
-        TVenta tventa = new TVenta();
-        tventa.setIdCliente(Integer.parseInt(txtidCliente.getText()));
-        tventa.setFechaBoleta(caltime.convertirCalendarATimestamp(fechaActual));
+        try {
+            Calendar fechaActual = new GregorianCalendar();
+            Timestamp fechaActualEnMillisegundo = caltime.convertirCalendarATimestamp(fechaActual);
+            TVenta tventa = new TVenta();
+            tventa.setIdCliente(Integer.parseInt(txtidCliente.getText()));
+            tventa.setFechaBoleta(fechaActualEnMillisegundo);
 
-        Integer idBoleta = ventaDAO.registrar(tventa);
-        
-        if(idBoleta !=null){
-            for (TDetalle tDetalle : listaDetalle) {
-                tDetalle.setIdBoleta(idBoleta);
-                detalleDAO.registrar(tDetalle);
-                
+            Integer idBoleta = ventaDAO.registrar(tventa);
+
+            if (idBoleta != null) {
+                for (TDetalle tDetalle : listaDetalle) {
+                    tDetalle.setIdBoleta(idBoleta);
+                    detalleDAO.registrar(tDetalle);
+
+                }
             }
+            TBoletaPDF boletaData = new TBoletaPDF(tcliente, listaDetalle, fechaActualEnMillisegundo);
+            boletaPdf.generarFacturaPDF(boletaData);
+            JOptionPane.showMessageDialog(null, "Se ha generado correctamente la boleta: " + idBoleta);
+            cleanForms();
+        } catch (Exception e) {
+            JOptionPane.showMessageDialog(null, "Failed: " + e.getLocalizedMessage());
         }
-        
-       
-
-
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
 
 
