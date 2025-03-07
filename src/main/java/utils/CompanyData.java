@@ -15,6 +15,7 @@ public class CompanyData {
     public static String TELEFONO = "0987654321";
     public static String DIRECCION = "Tamarindo City";
     public static String RAZON = "La magia de la programacion, esta en el poder de tu imaginacion";
+   
 
     public static String toStringData() {
         StringBuilder data = new StringBuilder();

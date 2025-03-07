@@ -56,24 +56,24 @@ public class CConexion {
         }
     }
 }
-*/
-
+ */
 package cap_bd;
 
 import java.sql.Connection;
 import java.sql.DriverManager;
 
 public class ConexionDB {
+
     //library 
     private static final String DRIVER_NAME = "com.mysql.cj.jdbc.Driver";
     // database credentials
     private static final String URL = "jdbc:mysql://localhost/dbpos";
-    private static final String USER ="root";
+    private static final String USER = "root";
     private static final String PASSWORD = "123456";
-    
+
     private static Connection con = null;
 
-    private static ConexionDB instancia  = null;
+    private static ConexionDB instancia = null;
 
     //THIS CLASS USES THE SINGLETON PATTERN  TO MANIPULATE DATA IN A MYSQL DATABASE  
     public static ConexionDB getInstancia() {
@@ -82,11 +82,10 @@ public class ConexionDB {
         }
         return instancia;
     }
-    
+
     public Connection getConnection() {
         return con;
     }
-    
 
     public ConexionDB() {
         try {
@@ -97,8 +96,8 @@ public class ConexionDB {
             System.out.println("conexion fallida");
         }
     }
-    
-     public static void cerrarConexion() {
+
+    public static void cerrarConexion() {
         if (con != null) {
             try {
                 con.close();
@@ -108,5 +107,5 @@ public class ConexionDB {
             }
         }
     }
-     
+
 }

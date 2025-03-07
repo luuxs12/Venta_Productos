@@ -125,9 +125,9 @@ public class BoletaPDF {
             tablaProducto.addCell(producto1);
             tablaProducto.addCell(producto3);
             tablaProducto.addCell(producto4);
-            
+
             ProductDAO productDao = new ProductDAO();
-            
+
             //agrega detalles de venta
             for (TDetalle detalle : boleta.getDetalles()) {
                 String producto = productDao.consultarPorId(detalle.getIdProducto()).getNombre();
@@ -174,5 +174,5 @@ public class BoletaPDF {
             System.out.println("Error en: " + e);
         }
     }
-   
+
 }

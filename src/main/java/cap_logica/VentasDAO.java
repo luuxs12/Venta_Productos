@@ -15,13 +15,13 @@ public class VentasDAO implements Crud<TVenta> {
 
     @Override
     public Integer registrar(TVenta data) {
-        Integer idboleta=null;
+        Integer idboleta = null;
         PreparedStatement ps = null;
 
         String sql = "INSERT INTO boleta (fechaBoleta, fkcliente) VALUES (?, ?)";
 
         try {
-            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql,Statement.RETURN_GENERATED_KEYS);
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql, Statement.RETURN_GENERATED_KEYS);
             ps.setTimestamp(1, data.getFechaBoleta());
             ps.setInt(2, data.getIdCliente());
 
@@ -30,7 +30,7 @@ public class VentasDAO implements Crud<TVenta> {
             if (rowsAffected > 0) {
                 System.out.println("boleta registrado exitosamente: ");
                 ResultSet llavegenerada = ps.getGeneratedKeys();
-                if(llavegenerada.next()){
+                if (llavegenerada.next()) {
                     idboleta = llavegenerada.getInt(1);
                 }
             } else {
@@ -45,9 +45,9 @@ public class VentasDAO implements Crud<TVenta> {
     @Override
     public List<TVenta> listar() {
         List<TVenta> datos = new ArrayList<>();
-         String sql = "SELECT * FROM boleta";
+        String sql = "SELECT * FROM boleta";
 
-        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TVenta v = new TVenta(
@@ -88,6 +88,5 @@ public class VentasDAO implements Crud<TVenta> {
     public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-
-
+    
 }

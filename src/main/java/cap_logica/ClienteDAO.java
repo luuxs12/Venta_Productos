@@ -11,7 +11,6 @@ import javax.swing.table.DefaultTableModel;
 
 public class ClienteDAO implements Crud<TCliente> {
 
-
     @Override
     public Integer registrar(TCliente data) {
 
@@ -35,7 +34,7 @@ public class ClienteDAO implements Crud<TCliente> {
         } catch (SQLException e) {
             System.out.println("Error al registrar el cliente: " + e.getMessage());
         }
-        
+
         return null;
     }
 
@@ -44,7 +43,7 @@ public class ClienteDAO implements Crud<TCliente> {
         List<TCliente> datos = new ArrayList<>();
         String sql = "SELECT * FROM cliente";
 
-        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TCliente c = new TCliente(
@@ -142,7 +141,6 @@ public class ClienteDAO implements Crud<TCliente> {
     @Override
     public void eliminar(int id) {
         String sql = "DELETE FROM cliente where idcliente=?";
-
         PreparedStatement ps = null;
 
         try {

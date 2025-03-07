@@ -293,7 +293,6 @@ public class FromCliente extends javax.swing.JInternalFrame {
         eliminarCliente();
         cltVM.cargarDatosTabla(tableModel);
         limpiarform();
-
     }//GEN-LAST:event_btneliminarActionPerformed
 
     private void tbClientesMousePressed(java.awt.event.MouseEvent evt) {//GEN-FIRST:event_tbClientesMousePressed
@@ -303,6 +302,8 @@ public class FromCliente extends javax.swing.JInternalFrame {
         } else {
             id = (Integer) tbClientes.getValueAt(fila, 0);
             tcliente = cltVM.consultarPorId(id);
+            System.out.println("id "+id);
+            System.out.println("selecetd " + tcliente);
             llenarDatosCliente();
         }
     }//GEN-LAST:event_tbClientesMousePressed

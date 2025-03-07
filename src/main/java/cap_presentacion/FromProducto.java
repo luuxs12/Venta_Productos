@@ -14,43 +14,42 @@ import javax.swing.table.DefaultTableModel;
  * @author Administrator
  */
 public class FromProducto extends javax.swing.JInternalFrame {
-    
+
     private int id;
     TProducto tproduct = new TProducto();
     private DefaultTableModel tableModel;
-    
+
     ProductDAO productoDAO = new ProductDAO();
-    
+
     public FromProducto() {
         initComponents();
         tableModel = new DefaultTableModel(new String[]{"id", "Nombre", "Precio", "Stock"}, 0);
-        
+
         tbproductos.setModel(tableModel);
         productoDAO.cargarDatosTabla(tableModel);
     }
-    
+
     void limpiarForm() {
         txtidproducto.setText("");
         txtnombreproducto.setText("");
         txtprecioproducto.setText("");
         txtstockproducto.setText("");
     }
-    
+
     private void llenarDatosProductos() {
         int filaseleccionado = tbproductos.getSelectedRow();
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "Cliente no seleccionado");
         } else {
-            
+
             txtidproducto.setText(String.valueOf(tproduct.getIdProducto()));
             txtnombreproducto.setText(tproduct.getNombre());
             txtprecioproducto.setText(tproduct.getPrecioProducto().toString());
             txtstockproducto.setText(String.valueOf(tproduct.getStock()));
-            
         }
-        
+
     }
-    
+
     public static boolean mostrarConfirmacion(String mensaje, String titulo) {
         int opcion = JOptionPane.showConfirmDialog(
                 null,
@@ -61,7 +60,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
         );
         return opcion == JOptionPane.YES_OPTION;
     }
-    
+
     private void eliminarProducto() {
         int filaseleccionado = tbproductos.getSelectedRow();
         if (filaseleccionado == -1 && filaseleccionado == 0) {
@@ -70,7 +69,7 @@ public class FromProducto extends javax.swing.JInternalFrame {
             if (mostrarConfirmacion("¿Estás seguro de eliminar cliente id : " + tproduct.getIdProducto() + "?", "Confirmar Eliminación")) {
                 productoDAO.eliminar(id);
             }
-            
+
         }
     }
 
@@ -261,16 +260,16 @@ public class FromProducto extends javax.swing.JInternalFrame {
         String nombre = txtnombreproducto.getText();
         double precioProducto = Double.parseDouble(txtprecioproducto.getText());
         int stock = Integer.parseInt(txtstockproducto.getText());
-        
+
         TProducto product = new TProducto();
         product.setNombre(nombre);
         product.setPrecioProducto(precioProducto);
         product.setStock(stock);
-        
+
         productoDAO.registrar(product);
         productoDAO.cargarDatosTabla(tableModel);
         limpiarForm();
-        
+
 
     }//GEN-LAST:event_btnguardarActionPerformed
 
@@ -279,23 +278,22 @@ public class FromProducto extends javax.swing.JInternalFrame {
         String nombre = txtnombreproducto.getText();
         double precioProducto = Double.parseDouble(txtprecioproducto.getText());
         int stock = Integer.parseInt(txtstockproducto.getText());
-        
+
         TProducto product = new TProducto();
         product.setIdProducto(id);
         product.setNombre(nombre);
         product.setPrecioProducto(precioProducto);
         product.setStock(stock);
-        
+
         productoDAO.actualizar(product);
         productoDAO.cargarDatosTabla(tableModel);
-         limpiarForm();
-        
-        
+        limpiarForm();
+
 
     }//GEN-LAST:event_btnmodificarActionPerformed
 
     private void btneliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btneliminarActionPerformed
-        
+
         eliminarProducto();
         productoDAO.cargarDatosTabla(tableModel);
         limpiarForm();

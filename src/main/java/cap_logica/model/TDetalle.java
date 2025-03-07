@@ -1,14 +1,18 @@
 package cap_logica.model;
+
 public class TDetalle {
+
     private int idDetalle;
     private int idBoleta;
     private int idProducto;
     private int cantidad;
-    private double  precioVenta;
+    private double precioVenta;
 
     public int getIdDetalle() {
         return idDetalle;
     }
+
+
 
     public void setIdDetalle(int idDetalle) {
         this.idDetalle = idDetalle;
@@ -45,7 +49,9 @@ public class TDetalle {
     public void setPrecioVenta(double precioVenta) {
         this.precioVenta = precioVenta;
     }
-    
-    
-    
+
+        @Override
+    public String toString() {
+        return "TDetalle{" + "idDetalle=" + idDetalle + ", idBoleta=" + idBoleta + ", idProducto=" + idProducto + ", cantidad=" + cantidad + ", precioVenta=" + precioVenta + '}';
+    }
 }

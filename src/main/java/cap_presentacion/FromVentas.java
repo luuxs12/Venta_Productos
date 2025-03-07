@@ -29,7 +29,7 @@ import utils.CalendarTime;
  *
  * @author Administrator
  */
-public final class FromVentas extends javax.swing.JInternalFrame {
+public class FromVentas extends javax.swing.JInternalFrame {
 
     private int id;
     private ClienteDAO cltDAO = new ClienteDAO();
@@ -83,6 +83,7 @@ public final class FromVentas extends javax.swing.JInternalFrame {
         if (filaseleccionado == -1) {
             JOptionPane.showMessageDialog(null, "producto no seleccionado");
         } else {
+
             txtidProduct.setText(String.valueOf(tproducto.getIdProducto()));
             txtNombreProduct.setText(tproducto.getNombre());
             txtPrecio.setText(tproducto.getPrecioProducto().toString());
@@ -141,7 +142,7 @@ public final class FromVentas extends javax.swing.JInternalFrame {
         jLabel15 = new javax.swing.JLabel();
         lblIdBoleta = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
-        jButton4 = new javax.swing.JButton();
+        btnEliminar = new javax.swing.JButton();
         jScrollPane3 = new javax.swing.JScrollPane();
         tbBoletaProducto = new javax.swing.JTable();
         jLabel18 = new javax.swing.JLabel();
@@ -480,7 +481,12 @@ public final class FromVentas extends javax.swing.JInternalFrame {
 
         jLabel17.setText("Seleccionar para Eliminar");
 
-        jButton4.setText("Eliminar");
+        btnEliminar.setText("Eliminar");
+        btnEliminar.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                btnEliminarActionPerformed(evt);
+            }
+        });
 
         tbBoletaProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
@@ -538,7 +544,7 @@ public final class FromVentas extends javax.swing.JInternalFrame {
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(jLabel17)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
-                        .addComponent(jButton4)
+                        .addComponent(btnEliminar)
                         .addGap(12, 12, 12))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, jPanel7Layout.createSequentialGroup()
                         .addGroup(jPanel7Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
@@ -554,7 +560,7 @@ public final class FromVentas extends javax.swing.JInternalFrame {
                     .addComponent(jLabel15)
                     .addComponent(lblIdBoleta)
                     .addComponent(jLabel17)
-                    .addComponent(jButton4))
+                    .addComponent(btnEliminar))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addComponent(jScrollPane3, javax.swing.GroupLayout.PREFERRED_SIZE, 137, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(18, 18, 18)
@@ -671,8 +677,6 @@ public final class FromVentas extends javax.swing.JInternalFrame {
         lblIGV.setText(String.valueOf(IGV));
 
         lblTotal.setText(String.valueOf(suma + IGV));
-
-
     }//GEN-LAST:event_btnAgregarProductActionPerformed
 
     private void cleanForms() {
@@ -709,12 +713,12 @@ public final class FromVentas extends javax.swing.JInternalFrame {
             Integer idBoleta = ventaDAO.registrar(tventa);
             List<TDetalle> detallesDelCliente = comprasEnCurso.get(tcliente);
             if (idBoleta != null) {
-                for (TDetalle tDetalle : detallesDelCliente ) {
+                for (TDetalle tDetalle : detallesDelCliente) {
                     tDetalle.setIdBoleta(idBoleta);
                     detalleDAO.registrar(tDetalle);
                 }
             }
-            TBoletaPDF boletaData = new TBoletaPDF(tcliente,detallesDelCliente, fechaActualEnMillisegundo);
+            TBoletaPDF boletaData = new TBoletaPDF(tcliente, detallesDelCliente, fechaActualEnMillisegundo);
             boletaPdf.generateBoletaPDF(boletaData);
             JOptionPane.showMessageDialog(null, "Se ha generado correctamente la boleta: " + idBoleta);
             cleanForms();
@@ -722,13 +726,25 @@ public final class FromVentas extends javax.swing.JInternalFrame {
             JOptionPane.showMessageDialog(null, "Failed: " + e.getLocalizedMessage());
         }
     }//GEN-LAST:event_btnGenerarVentaActionPerformed
-   
+
+    private void btnEliminarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnEliminarActionPerformed
+        int filaseleccionado = tbBoletaProducto.getSelectedRow();
+        if (filaseleccionado == -1) {
+            JOptionPane.showMessageDialog(null, "Detalle no seleccionado");
+        } else {
+            System.out.println("selected ->" + filaseleccionado);
+            comprasEnCurso.get(tcliente).remove(filaseleccionado);
+            DefaultTableModel model = (DefaultTableModel) tbBoletaProducto.getModel();
+            model.removeRow(filaseleccionado);
+        }
+    }//GEN-LAST:event_btnEliminarActionPerformed
+
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
     private javax.swing.JButton btnAgregarProduct;
+    private javax.swing.JButton btnEliminar;
     private javax.swing.JButton btnGenerarVenta;
     private javax.swing.JCheckBox chkModificarPrecio;
-    private javax.swing.JButton jButton4;
     private javax.swing.JLabel jLabel1;
     private javax.swing.JLabel jLabel10;
     private javax.swing.JLabel jLabel11;

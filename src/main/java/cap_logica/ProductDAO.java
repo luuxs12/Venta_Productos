@@ -17,9 +17,8 @@ import javax.swing.table.DefaultTableModel;
  *
  * @author eramos
  */
-public class ProductDAO implements Crud<TProducto>  {
-    
-    
+public class ProductDAO implements Crud<TProducto> {
+
     @Override
     public Integer registrar(TProducto data) {
 
@@ -52,7 +51,7 @@ public class ProductDAO implements Crud<TProducto>  {
         List<TProducto> datos = new ArrayList<>();
         String sql = "SELECT * FROM producto";
 
-        try ( PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
+        try (PreparedStatement ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql); ResultSet rs = ps.executeQuery()) {
 
             while (rs.next()) {
                 TProducto c = new TProducto(
@@ -76,7 +75,7 @@ public class ProductDAO implements Crud<TProducto>  {
 
     @Override
     public TProducto consultarPorId(int id) {
-        TProducto p = null; 
+        TProducto p = null;
         String sql = "select * from producto where idproducto=?";
 
         PreparedStatement ps = null;
@@ -114,9 +113,7 @@ public class ProductDAO implements Crud<TProducto>  {
                 producto.getIdProducto(),
                 producto.getNombre(),
                 producto.getPrecioProducto(),
-                producto.getStock(),
-            });
-
+                producto.getStock(),});
         }
 
     }
@@ -164,11 +161,11 @@ public class ProductDAO implements Crud<TProducto>  {
             } else {
                 System.out.println("Error al eliminado el producto.");
             }
-   
+
         } catch (Exception e) {
             System.out.println("Error al consultarid del producto: " + e.getMessage());
         }
 
     }
-    
+
 }

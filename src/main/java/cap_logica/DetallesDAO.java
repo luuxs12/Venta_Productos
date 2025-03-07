@@ -10,7 +10,7 @@ import java.util.List;
 import javax.swing.table.DefaultTableModel;
 
 public class DetallesDAO implements Crud<TDetalle> {
-    
+
     @Override
     public Integer registrar(TDetalle data) {
         PreparedStatement ps = null;
@@ -47,24 +47,23 @@ public class DetallesDAO implements Crud<TDetalle> {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-  
     public List<TDetalle> getDetallesByBoletaId(int id) {
-         String sql = "SELECT * FROM detalle where fkBoleta = ? ";
-        
+        String sql = "SELECT * FROM detalle where fkBoleta = ? ";
+
         PreparedStatement ps = null;
-        List<TDetalle>datos = new ArrayList(); 
-        
+        List<TDetalle> datos = new ArrayList();
+
         try {
             ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
             ps.setInt(1, id);
             ResultSet rs = ps.executeQuery();
 
-           while (rs.next()) {
+            while (rs.next()) {
                 TDetalle c = new TDetalle();
                 c.setIdDetalle(rs.getInt(1));
                 c.setIdBoleta(rs.getInt(2));
                 c.setIdProducto(rs.getInt(3));
-                c.setCantidad(rs.getInt(4))  ;
+                c.setCantidad(rs.getInt(4));
                 c.setPrecioVenta(rs.getDouble(5));
                 datos.add(c);
             }
@@ -73,7 +72,7 @@ public class DetallesDAO implements Crud<TDetalle> {
             System.out.println("Error al consultarid del cliente: " + e.getMessage());
         }
         return datos;
- 
+
     }
 
     @Override
@@ -90,11 +89,27 @@ public class DetallesDAO implements Crud<TDetalle> {
     public void eliminar(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
-    
+
     @Override
     public TDetalle consultarPorId(int id) {
         throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
     }
 
-
+     public static void eliminarPorBoletaId(int boletaId) {
+        try {
+            String sqlboleta = "DELETE FROM detalle where fkboleta=?";
+            PreparedStatement ps = null;
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sqlboleta);
+            ps.setInt(1, boletaId);
+            int rowsAffected = ps.executeUpdate();
+            // Confirmación en consola
+            if (rowsAffected > 0) {
+                System.out.println("detalle por boletaid eliminado exitosamente: ");
+            } else {
+                System.out.println("detalle por boleta id: error al eliminado el detalle.");
+            }
+        } catch (Exception e) {
+            System.out.println("Error al eliminar detalle por id de: " + e.getMessage());
+        }
+    }
 }

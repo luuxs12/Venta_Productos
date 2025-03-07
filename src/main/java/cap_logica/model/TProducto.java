@@ -6,26 +6,24 @@ package cap_logica.model;
 
 /**
  *
- * @author eramos
- *  This is a clear example of persistence classes. TProducto is like Productos in the Database
+ * @author eramos This is a clear example of persistence classes. TProducto is like Productos in the Database
  */
 public class TProducto {
-    
+
     private Integer idproducto;
     private Double precioProducto;
     private String nombre;
     private Integer stock;
-    
-    
-    public TProducto(){}
-    
+
+    public TProducto() {
+    }
+
     public TProducto(Integer idProducto, String nombre, Double precioProducto, Integer stock) {
         this.idproducto = idProducto;
         this.precioProducto = precioProducto;
         this.nombre = nombre;
         this.stock = stock;
     }
-
 
     public Integer getIdProducto() {
         return idproducto;
@@ -58,5 +56,5 @@ public class TProducto {
     public void setStock(Integer stock) {
         this.stock = stock;
     }
-    
+
 }

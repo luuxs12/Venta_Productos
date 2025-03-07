@@ -22,7 +22,6 @@ public class TCliente extends Persona{
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
@@ -52,6 +51,11 @@ public class TCliente extends Persona{
         this.apellido = apellido;
     }
     
+      @Override
+    public String toString() {
+        return "TCliente{" + "id=" + id + ", dni=" + dni +"nombre="+ nombre + "apellido=" + apellido+ '}';
+    }
+
     
     
     
