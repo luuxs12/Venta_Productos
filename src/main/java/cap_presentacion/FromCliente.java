@@ -96,7 +96,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
         btneliminar = new javax.swing.JButton();
         jLabel5 = new javax.swing.JLabel();
 
-        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Productos"));
+        jPanel1.setBorder(javax.swing.BorderFactory.createTitledBorder("Datos Clientes"));
 
         jLabel1.setText("ID:");
 
@@ -221,7 +221,7 @@ public class FromCliente extends javax.swing.JInternalFrame {
                         .addComponent(btnguardar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
                         .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                         .addComponent(btnmodificar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE)
-                        .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
+                        .addGap(148, 148, 148)
                         .addComponent(btneliminar, javax.swing.GroupLayout.PREFERRED_SIZE, 160, javax.swing.GroupLayout.PREFERRED_SIZE))
                     .addGroup(javax.swing.GroupLayout.Alignment.TRAILING, layout.createSequentialGroup()
                         .addGap(0, 0, Short.MAX_VALUE)

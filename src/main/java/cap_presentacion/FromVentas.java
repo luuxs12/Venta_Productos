@@ -47,8 +47,8 @@ public class FromVentas extends javax.swing.JInternalFrame {
     public FromVentas() {
         initComponents();
         System.out.println("inicio de ventas");
-        tableModelCliente = new DefaultTableModel(new String[]{"id", "Nombre", "Teléfono", "Correo"}, 0);
-        tableModelProducto = new DefaultTableModel(new String[]{"id", "Nombre", "Teléfono", "Correo"}, 0);
+        tableModelCliente = new DefaultTableModel(new String[]{"id", "Nombre", "Apellido", "Dni"}, 0);
+        tableModelProducto = new DefaultTableModel(new String[]{"id", "Producto", "Precio", "Stock"}, 0);
         tableModelBoleta = new DefaultTableModel(new String[]{"IdProducto", "N.Producto", "Precio", "Cantidad", "Subtotal"}, 0);
         tbBoletaProducto.setModel(tableModelBoleta);
         tbClientes.setModel(tableModelCliente);
