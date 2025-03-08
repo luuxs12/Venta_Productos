@@ -19,12 +19,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     FromCliente frmCliente = new FromCliente();
     FromProducto frmProduct = new FromProducto();
     FromVentas frmVentas = new FromVentas();
+    FromBuscarBoleta frmBuscarBoleta = new FromBuscarBoleta();
 
     public MenuPrincipal() {
         initComponents();
         jPanel1.add(frmCliente);
         jPanel1.add(frmProduct);
         jPanel1.add(frmVentas);
+        jPanel1.add(frmBuscarBoleta);
         setExtendedState(MAXIMIZED_BOTH);
         ConexionDB.getInstancia().getConnection();
 
@@ -139,9 +141,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenuBar1.add(mnClientes);
 
-        jMenu3.setText("REPORTES");
+        jMenu3.setText("BUSCAR");
 
-        jMenu5.setText("jMenu5");
+        jMenu5.setText("Boleta");
+        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+            public void actionPerformed(java.awt.event.ActionEvent evt) {
+                jMenu5ActionPerformed(evt);
+            }
+        });
         jMenu3.add(jMenu5);
 
         jMenuBar1.add(jMenu3);
@@ -164,7 +171,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
             layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(layout.createSequentialGroup()
                 .addContainerGap()
-                .addComponent(jScrollPane1, javax.swing.GroupLayout.DEFAULT_SIZE, 920, Short.MAX_VALUE)
+                .addComponent(jScrollPane1)
                 .addContainerGap())
         );
 
@@ -179,6 +186,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         frmProduct.setVisible(false);
         frmCliente.setVisible(true);
         frmVentas.setVisible(false);
+        frmBuscarBoleta.setVisible(false);
 
     }//GEN-LAST:event_jMenuItem1ActionPerformed
 
@@ -186,6 +194,7 @@ public class MenuPrincipal extends javax.swing.JFrame {
         frmCliente.setVisible(false);
         frmProduct.setVisible(true);
         frmVentas.setVisible(false);
+        frmBuscarBoleta.setVisible(false);
 
     }//GEN-LAST:event_jMenuItem2ActionPerformed
 
@@ -197,12 +206,20 @@ public class MenuPrincipal extends javax.swing.JFrame {
         frmCliente.setVisible(false);
         frmProduct.setVisible(false);
         frmVentas.setVisible(true);
+        frmBuscarBoleta.setVisible(false);
 
         if (frmVentas.isVisible()) {
             frmVentas.actulizarTabla();
         }
 
     }//GEN-LAST:event_jMenu1MousePressed
+
+    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+        frmCliente.setVisible(false);
+        frmProduct.setVisible(false);
+        frmVentas.setVisible(false);
+        frmBuscarBoleta.setVisible(true);
+    }//GEN-LAST:event_jMenu5ActionPerformed
 
     /**
      * @param args the command line arguments

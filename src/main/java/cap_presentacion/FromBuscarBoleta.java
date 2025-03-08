@@ -4,17 +4,35 @@
  */
 package cap_presentacion;
 
+import cap_logica.ClienteDAO;
+import cap_logica.DetallesDAO;
+import cap_logica.ProductDAO;
+import cap_logica.VentasDAO;
+import cap_logica.model.TCliente;
+import cap_logica.model.TDetalle;
+import cap_logica.model.TProducto;
+import cap_logica.model.TVenta;
+import javax.swing.table.DefaultTableModel;
+
 /**
  *
  * @author Administrator
  */
 public class FromBuscarBoleta extends javax.swing.JInternalFrame {
 
+    private VentasDAO ventasDao = new VentasDAO();
+    private ClienteDAO clienteDao = new ClienteDAO();
+    private DetallesDAO detallesDao = new DetallesDAO();
+    private ProductDAO productoDao = new ProductDAO();
+    
+    private DefaultTableModel tableModelProducto;
     /**
      * Creates new form FromBuscarBoleta
      */
     public FromBuscarBoleta() {
         initComponents();
+        tableModelProducto =  new DefaultTableModel(new String[]{"IdProducto", "N.Producto", "Cantidad", "Subtotal"}, 0);
+         tblProducto.setModel(tableModelProducto);
     }
 
     /**
@@ -25,8 +43,8 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
     private void initComponents() {
 
         jPanel2 = new javax.swing.JPanel();
-        jTextField1 = new javax.swing.JTextField();
-        jButton1 = new javax.swing.JButton();
+        txtId = new javax.swing.JTextField();
+        btnBuscar = new javax.swing.JButton();
         jLabel1 = new javax.swing.JLabel();
         jLabel2 = new javax.swing.JLabel();
         jLabel3 = new javax.swing.JLabel();
@@ -35,12 +53,12 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
         jLabel5 = new javax.swing.JLabel();
         jLabel6 = new javax.swing.JLabel();
         jLabel7 = new javax.swing.JLabel();
-        jLabel12 = new javax.swing.JLabel();
-        jLabel13 = new javax.swing.JLabel();
-        jLabel14 = new javax.swing.JLabel();
+        txtNombreCliente = new javax.swing.JLabel();
+        txtApellidoCliente = new javax.swing.JLabel();
+        txtDniCliente = new javax.swing.JLabel();
         jLabel15 = new javax.swing.JLabel();
         jScrollPane1 = new javax.swing.JScrollPane();
-        jTable1 = new javax.swing.JTable();
+        tblProducto = new javax.swing.JTable();
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
@@ -48,10 +66,10 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingresar Numero de Boleta"));
 
-        jButton1.setText("Buscar");
-        jButton1.addActionListener(new java.awt.event.ActionListener() {
+        btnBuscar.setText("Buscar");
+        btnBuscar.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jButton1ActionPerformed(evt);
+                btnBuscarActionPerformed(evt);
             }
         });
 
@@ -61,9 +79,9 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
             jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(35, 35, 35)
-                .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
+                .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, 334, javax.swing.GroupLayout.PREFERRED_SIZE)
                 .addGap(35, 35, 35)
-                .addComponent(jButton1)
+                .addComponent(btnBuscar)
                 .addContainerGap(41, Short.MAX_VALUE))
         );
         jPanel2Layout.setVerticalGroup(
@@ -71,8 +89,8 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
             .addGroup(jPanel2Layout.createSequentialGroup()
                 .addGap(28, 28, 28)
                 .addGroup(jPanel2Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jTextField1, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
-                    .addComponent(jButton1))
+                    .addComponent(txtId, javax.swing.GroupLayout.PREFERRED_SIZE, javax.swing.GroupLayout.DEFAULT_SIZE, javax.swing.GroupLayout.PREFERRED_SIZE)
+                    .addComponent(btnBuscar))
                 .addContainerGap(22, Short.MAX_VALUE))
         );
 
@@ -97,11 +115,11 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
         jLabel7.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel7.setText("Dni");
 
-        jLabel12.setText("....");
+        txtNombreCliente.setText("....");
 
-        jLabel13.setText("....");
+        txtApellidoCliente.setText("....");
 
-        jLabel14.setText("....");
+        txtDniCliente.setText("....");
 
         javax.swing.GroupLayout jPanel1Layout = new javax.swing.GroupLayout(jPanel1);
         jPanel1.setLayout(jPanel1Layout);
@@ -114,20 +132,20 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
                         .addComponent(jLabel5))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(47, 47, 47)
-                        .addComponent(jLabel12)))
+                        .addComponent(txtNombreCliente)))
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(139, 139, 139)
                         .addComponent(jLabel6))
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(166, 166, 166)
-                        .addComponent(jLabel13)))
+                        .addComponent(txtApellidoCliente)))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED, javax.swing.GroupLayout.DEFAULT_SIZE, Short.MAX_VALUE)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
                     .addComponent(jLabel7)
                     .addGroup(jPanel1Layout.createSequentialGroup()
                         .addGap(6, 6, 6)
-                        .addComponent(jLabel14)))
+                        .addComponent(txtDniCliente)))
                 .addGap(48, 48, 48))
         );
         jPanel1Layout.setVerticalGroup(
@@ -140,15 +158,15 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel7))
                 .addPreferredGap(javax.swing.LayoutStyle.ComponentPlacement.RELATED)
                 .addGroup(jPanel1Layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
-                    .addComponent(jLabel12)
-                    .addComponent(jLabel13)
-                    .addComponent(jLabel14))
+                    .addComponent(txtNombreCliente)
+                    .addComponent(txtApellidoCliente)
+                    .addComponent(txtDniCliente))
                 .addContainerGap(27, Short.MAX_VALUE))
         );
 
         jLabel15.setText("Productos");
 
-        jTable1.setModel(new javax.swing.table.DefaultTableModel(
+        tblProducto.setModel(new javax.swing.table.DefaultTableModel(
             new Object [][] {
                 {},
                 {},
@@ -159,7 +177,7 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
 
             }
         ));
-        jScrollPane1.setViewportView(jTable1);
+        jScrollPane1.setViewportView(tblProducto);
 
         jLabel16.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel16.setText("Total:");
@@ -244,17 +262,40 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
         pack();
     }// </editor-fold>//GEN-END:initComponents
 
-    private void jButton1ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jButton1ActionPerformed
-        // TODO add your handling code here:
-    }//GEN-LAST:event_jButton1ActionPerformed
+    private void btnBuscarActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_btnBuscarActionPerformed
+        try {
+            int id = Integer.parseInt(txtId.getText());
+            TVenta boleta = ventasDao.consultarPorId(id);
+            cargarDatosCliente(boleta.getIdCliente());
+            cargarProductos(boleta.getIdboleta());
+        } catch (NumberFormatException e) {
 
+            System.out.println("El id no es un número válido.");
+        }
+
+    }//GEN-LAST:event_btnBuscarActionPerformed
+    private void cargarDatosCliente(int clienteId) {
+        TCliente cliente = clienteDao.consultarPorId(clienteId);
+        txtNombreCliente.setText(cliente.getNombre());
+        txtApellidoCliente.setText(cliente.getApellido());
+        txtDniCliente.setText(String.valueOf(cliente.getDni()));
+    }
+    
+    private void cargarProductos(int boletaId) {
+       for (TDetalle detalle :  detallesDao.getDetallesByBoletaId(boletaId)){
+           TProducto producto = productoDao.consultarPorId(detalle.getIdProducto());
+            tableModelProducto.addRow(new Object[]{
+            producto.getIdProducto(),
+            producto.getNombre(),
+            detalle.getCantidad(),
+            detalle.getPrecioVenta()
+        });
+       }
+    }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
-    private javax.swing.JButton jButton1;
+    private javax.swing.JButton btnBuscar;
     private javax.swing.JLabel jLabel1;
-    private javax.swing.JLabel jLabel12;
-    private javax.swing.JLabel jLabel13;
-    private javax.swing.JLabel jLabel14;
     private javax.swing.JLabel jLabel15;
     private javax.swing.JLabel jLabel16;
     private javax.swing.JLabel jLabel17;
@@ -269,7 +310,10 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
-    private javax.swing.JTable jTable1;
-    private javax.swing.JTextField jTextField1;
+    private javax.swing.JTable tblProducto;
+    private javax.swing.JLabel txtApellidoCliente;
+    private javax.swing.JLabel txtDniCliente;
+    private javax.swing.JTextField txtId;
+    private javax.swing.JLabel txtNombreCliente;
     // End of variables declaration//GEN-END:variables
 }
