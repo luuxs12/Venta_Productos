@@ -44,14 +44,14 @@
             <Property name="text" type="java.lang.String" value="BUSCAR"/>
           </Properties>
           <SubComponents>
-            <Menu class="javax.swing.JMenu" name="jMenu5">
+            <MenuItem class="javax.swing.JMenuItem" name="jMenuBoleta">
               <Properties>
                 <Property name="text" type="java.lang.String" value="Boleta"/>
               </Properties>
               <Events>
-                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenu5ActionPerformed"/>
+                <EventHandler event="actionPerformed" listener="java.awt.event.ActionListener" parameters="java.awt.event.ActionEvent" handler="jMenuBoletaActionPerformed"/>
               </Events>
-            </Menu>
+            </MenuItem>
           </SubComponents>
         </Menu>
         <Menu class="javax.swing.JMenu" name="jMenu4">
@@ -114,6 +114,7 @@
             </Property>
           </Properties>
           <AuxValues>
+            <AuxValue name="JavaCodeGenerator_CreateCodeCustom" type="java.lang.String" value="new FondoPanel()"/>
             <AuxValue name="JavaCodeGenerator_LayoutCodePre" type="java.lang.String" value="jPanel1.addComponentListener(new ComponentAdapter() {&#xa;    @Override&#xa;    public void componentResized(ComponentEvent e) {&#xa;        centrarFormulario(frmCliente, jPanel1);&#xa;    }&#xa;});&#xa;&#xa;jPanel1.addComponentListener(new ComponentAdapter() {&#xa;    @Override&#xa;    public void componentResized(ComponentEvent e) {&#xa;        centrarFormulario(frmProduct, jPanel1);&#xa;    }&#xa;});&#xa;&#xa;jPanel1.addComponentListener(new ComponentAdapter() {&#xa;    @Override&#xa;    public void componentResized(ComponentEvent e) {&#xa;        centrarFormulario(frmVentas, jPanel1);&#xa;    }&#xa;});"/>
           </AuxValues>
 

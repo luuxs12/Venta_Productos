@@ -62,7 +62,7 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
         jLabel16 = new javax.swing.JLabel();
         jLabel17 = new javax.swing.JLabel();
         jLabel8 = new javax.swing.JLabel();
-        jLabel9 = new javax.swing.JLabel();
+        lbltotal = new javax.swing.JLabel();
 
         jPanel2.setBorder(javax.swing.BorderFactory.createTitledBorder("Ingresar Numero de Boleta"));
 
@@ -188,7 +188,8 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
         jLabel8.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
         jLabel8.setText("IGV:");
 
-        jLabel9.setText(".....");
+        lbltotal.setFont(new java.awt.Font("Segoe UI", 1, 14)); // NOI18N
+        lbltotal.setText(".....");
 
         javax.swing.GroupLayout layout = new javax.swing.GroupLayout(getContentPane());
         getContentPane().setLayout(layout);
@@ -224,11 +225,9 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
                     .addComponent(jLabel16, javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel8, javax.swing.GroupLayout.Alignment.TRAILING))
                 .addGap(18, 18, 18)
-                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.LEADING)
+                .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.TRAILING)
                     .addComponent(jLabel17)
-                    .addGroup(layout.createSequentialGroup()
-                        .addGap(8, 8, 8)
-                        .addComponent(jLabel9)))
+                    .addComponent(lbltotal))
                 .addGap(18, 18, 18))
         );
         layout.setVerticalGroup(
@@ -255,7 +254,7 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
                 .addGap(18, 18, 18)
                 .addGroup(layout.createParallelGroup(javax.swing.GroupLayout.Alignment.BASELINE)
                     .addComponent(jLabel16)
-                    .addComponent(jLabel9))
+                    .addComponent(lbltotal))
                 .addContainerGap(31, Short.MAX_VALUE))
         );
 
@@ -282,7 +281,9 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
     }
     
     private void cargarProductos(int boletaId) {
+       double total = 0.0;
        for (TDetalle detalle :  detallesDao.getDetallesByBoletaId(boletaId)){
+           total +=detalle.getPrecioVenta();
            TProducto producto = productoDao.consultarPorId(detalle.getIdProducto());
             tableModelProducto.addRow(new Object[]{
             producto.getIdProducto(),
@@ -291,6 +292,7 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
             detalle.getPrecioVenta()
         });
        }
+       lbltotal.setText(String.valueOf(total));
     }
 
     // Variables declaration - do not modify//GEN-BEGIN:variables
@@ -306,10 +308,10 @@ public class FromBuscarBoleta extends javax.swing.JInternalFrame {
     private javax.swing.JLabel jLabel6;
     private javax.swing.JLabel jLabel7;
     private javax.swing.JLabel jLabel8;
-    private javax.swing.JLabel jLabel9;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JPanel jPanel2;
     private javax.swing.JScrollPane jScrollPane1;
+    private javax.swing.JLabel lbltotal;
     private javax.swing.JTable tblProducto;
     private javax.swing.JLabel txtApellidoCliente;
     private javax.swing.JLabel txtDniCliente;

@@ -71,7 +71,29 @@ public class VentasDAO implements Crud<TVenta> {
 
     @Override
     public TVenta consultarPorId(int id) {
-        throw new UnsupportedOperationException("Not supported yet."); // Generated from nbfs://nbhost/SystemFileSystem/Templates/Classes/Code/GeneratedMethodBody
+        
+         TVenta c = new TVenta( );
+        String sql = "select * from boleta where idboleta=?";
+
+        PreparedStatement ps = null;
+
+        try {
+            ps = ConexionDB.getInstancia().getConnection().prepareStatement(sql);
+            ps.setInt(1, id);
+            ResultSet rs = ps.executeQuery();
+
+            if (rs.next()) {
+                c.setIdboleta(rs.getInt(1));
+                c.setFechaBoleta(rs.getTimestamp(2));
+                c.setIdCliente(rs.getInt(3));
+            } else {
+                System.out.println("No se encontró una boleta con ID: " + id);
+            }
+
+        } catch (Exception e) {
+            System.out.println("Error al consultarid de boleta: " + e.getMessage());
+        }
+        return c;
     }
 
     @Override

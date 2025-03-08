@@ -5,8 +5,12 @@
 package cap_presentacion;
 
 import cap_bd.ConexionDB;
+import java.awt.Graphics;
+import java.awt.Image;
 import java.awt.event.ComponentAdapter;
 import java.awt.event.ComponentEvent;
+import java.io.File;
+import javax.swing.ImageIcon;
 import javax.swing.JInternalFrame;
 import javax.swing.JPanel;
 
@@ -15,7 +19,7 @@ import javax.swing.JPanel;
  * @author Administrator
  */
 public class MenuPrincipal extends javax.swing.JFrame {
-
+    FondoPanel fondo = new FondoPanel();
     FromCliente frmCliente = new FromCliente();
     FromProducto frmProduct = new FromProducto();
     FromVentas frmVentas = new FromVentas();
@@ -55,14 +59,14 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private void initComponents() {
 
         jScrollPane1 = new javax.swing.JScrollPane();
-        jPanel1 = new javax.swing.JPanel();
+        jPanel1 = new FondoPanel();
         jMenuBar1 = new javax.swing.JMenuBar();
         jMenu1 = new javax.swing.JMenu();
         mnClientes = new javax.swing.JMenu();
         jMenuItem1 = new javax.swing.JMenuItem();
         jMenuItem2 = new javax.swing.JMenuItem();
         jMenu3 = new javax.swing.JMenu();
-        jMenu5 = new javax.swing.JMenu();
+        jMenuBoleta = new javax.swing.JMenuItem();
         jMenu4 = new javax.swing.JMenu();
 
         setDefaultCloseOperation(javax.swing.WindowConstants.EXIT_ON_CLOSE);
@@ -143,13 +147,13 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
         jMenu3.setText("BUSCAR");
 
-        jMenu5.setText("Boleta");
-        jMenu5.addActionListener(new java.awt.event.ActionListener() {
+        jMenuBoleta.setText("Boleta");
+        jMenuBoleta.addActionListener(new java.awt.event.ActionListener() {
             public void actionPerformed(java.awt.event.ActionEvent evt) {
-                jMenu5ActionPerformed(evt);
+                jMenuBoletaActionPerformed(evt);
             }
         });
-        jMenu3.add(jMenu5);
+        jMenu3.add(jMenuBoleta);
 
         jMenuBar1.add(jMenu3);
 
@@ -214,12 +218,12 @@ public class MenuPrincipal extends javax.swing.JFrame {
 
     }//GEN-LAST:event_jMenu1MousePressed
 
-    private void jMenu5ActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenu5ActionPerformed
+    private void jMenuBoletaActionPerformed(java.awt.event.ActionEvent evt) {//GEN-FIRST:event_jMenuBoletaActionPerformed
         frmCliente.setVisible(false);
         frmProduct.setVisible(false);
         frmVentas.setVisible(false);
         frmBuscarBoleta.setVisible(true);
-    }//GEN-LAST:event_jMenu5ActionPerformed
+    }//GEN-LAST:event_jMenuBoletaActionPerformed
 
     /**
      * @param args the command line arguments
@@ -261,12 +265,28 @@ public class MenuPrincipal extends javax.swing.JFrame {
     private javax.swing.JMenu jMenu1;
     private javax.swing.JMenu jMenu3;
     private javax.swing.JMenu jMenu4;
-    private javax.swing.JMenu jMenu5;
     private javax.swing.JMenuBar jMenuBar1;
+    private javax.swing.JMenuItem jMenuBoleta;
     private javax.swing.JMenuItem jMenuItem1;
     private javax.swing.JMenuItem jMenuItem2;
     private javax.swing.JPanel jPanel1;
     private javax.swing.JScrollPane jScrollPane1;
     private javax.swing.JMenu mnClientes;
     // End of variables declaration//GEN-END:variables
-}
+
+class FondoPanel extends JPanel
+{
+    private Image imagen;
+
+    @Override
+    public void paint(Graphics g)
+    {
+       imagen = new ImageIcon(new File("src/main/java/cap_img/fondo.png").getAbsolutePath()).getImage();
+
+        g.drawImage(imagen, 0, 0, getWidth(), getHeight(), this);
+
+        setOpaque(false);
+
+        super.paint(g);
+    }
+}}
